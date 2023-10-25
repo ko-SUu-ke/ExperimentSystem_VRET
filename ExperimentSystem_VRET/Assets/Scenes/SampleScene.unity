@@ -6243,8 +6243,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   presenMonitor: {fileID: 1243432352}
   timer: {fileID: 326771927}
-  themeNum: 4
-  timeSpan: 10
+  themeNum: 9
+  timeSpan: 5
   theme1: "\u900F\u660E\u4EBA\u9593\u306B\u306A\u308A\u305F\u3044\u304B\uFF0C\u306A\u308A\u306A\u304F\u306A\u3044\u304B\u3002"
   theme2: "\u4E00\u7DD2\u306B\u4F4F\u3080\u306A\u3089\u72AC\u3068\u732B\u306E\u3069\u3061\u3089\u304C\u826F\u3044\u304B"
   theme3: "\u30DA\u30C3\u30C8\u306E\u8CA9\u58F2\u3092\u7981\u6B62\u3059\u3079\u304D\u304B\u3069\u3046\u304B\u3002"
