@@ -33,19 +33,12 @@ public class PresenSystem : MonoBehaviour
     internal int status;
 
     internal int second; //カウントダウンの時間（秒）
-
+    public GameObject pointer;
 
 
     void Start()
     {
-        second = -1;
-        nowThemeCount = 0;
-        limitTime = 0;
-        themeList = new List<string>() { theme1, theme2, theme3, theme4, theme5, theme6, theme7, theme8, theme9 };
-        presenMonitor.SetText(theme1);
-        isSUDS = true;
-        isRestart = false;
-        status = 0;
+        Init();
     }
 
     // Update is called once per frame
@@ -70,12 +63,14 @@ public class PresenSystem : MonoBehaviour
                     isRestart = true;
                 }
                 ShowSUDS();
+                pointer.SetActive(true);
             }
             else if (isRestart)
             {
                 RestartTime();
                 ShowTheme();
                 ShowLimitTime();
+                pointer.SetActive(false);
             }
             else
             {
@@ -86,8 +81,46 @@ public class PresenSystem : MonoBehaviour
         }
         else if(status == 2)
         {
-
+            if (Input.GetKeyDown("space"))
+            {
+                status = 0;
+                Init();
+            }
+            pointer.SetActive(true);
         }
+    }
+
+    public void Click()
+    {
+        if (status == 0)
+        {
+            status = 1;
+        }
+        else if(status == 1)
+        {
+            if (isSUDS)
+            {
+                isSUDS = false;
+                isRestart = true;
+            }
+        }
+        else if(status == 2)
+        {
+            status = 0;
+            Init();
+        }
+    }
+
+    internal void Init()
+    {
+        second = -1;
+        nowThemeCount = 0;
+        limitTime = 0;
+        themeList = new List<string>() { theme1, theme2, theme3, theme4, theme5, theme6, theme7, theme8, theme9 };
+        presenMonitor.SetText(theme1);
+        isSUDS = true;
+        isRestart = false;
+        status = 0;
     }
 
     /// <summary>
