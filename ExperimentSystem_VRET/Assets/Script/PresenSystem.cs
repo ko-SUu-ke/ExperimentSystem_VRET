@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using TMPro;
+using System.Linq;
 
 public class PresenSystem : MonoBehaviour
 {
@@ -14,8 +15,9 @@ public class PresenSystem : MonoBehaviour
     private int nowThemeCount;//現在のプレゼン数
     private int limitTime; //制限時間　
     public int timeSpan;　//プレゼン時間設定
-    private bool isSUDS;
-    private bool isRestart;
+    internal bool isSUDS;
+    internal bool isRestart;
+    internal bool isPresentating;
 
     public string theme1;
     public string theme2;
@@ -28,86 +30,46 @@ public class PresenSystem : MonoBehaviour
     public string theme9;
 
     private List<string> themeList; //プレゼンテーマリスト
+    internal List<int> SUDSScores;
 
-    internal bool isPresentating;
     internal int status;
 
     internal int second; //カウントダウンの時間（秒）
     public GameObject pointer;
+    internal GameObject NumKeypad;
 
 
     void Start()
     {
+        NumKeypad = GameObject.Find("NumKeypad");
+        SUDSScores = new List<int>();
         Init();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if(status == 0)
         {
-            presenMonitor.SetText("Spaceでスタート");
-            if (Input.GetKeyDown("space"))
-            {
-                status = 1;
-            }
+            TitleScreen();
         }
         else if (status == 1)
         {
-            if (isSUDS)
-            {
-                if (Input.GetKeyDown("space"))
-                {
-                    isSUDS = false;
-                    isRestart = true;
-                }
-                ShowSUDS();
-                pointer.SetActive(true);
-            }
-            else if (isRestart)
-            {
-                RestartTime();
-                ShowTheme();
-                ShowLimitTime();
-                pointer.SetActive(false);
-            }
-            else
-            {
-                ChangeTheme();
-                ShowLimitTime();
-            }
-            LimitTimer();
+            PresenScreen();
         }
         else if(status == 2)
         {
-            if (Input.GetKeyDown("space"))
-            {
-                status = 0;
-                Init();
-            }
-            pointer.SetActive(true);
+            EndScreen();
         }
     }
 
-    public void Click()
+    internal void TitleScreen()
     {
-        if (status == 0)
+        presenMonitor.SetText("Spaceでスタート");
+        NumKeypad.SetActive(false);
+        if (Input.GetKeyDown("space"))
         {
             status = 1;
-        }
-        else if(status == 1)
-        {
-            if (isSUDS)
-            {
-                isSUDS = false;
-                isRestart = true;
-            }
-        }
-        else if(status == 2)
-        {
-            status = 0;
-            Init();
         }
     }
 
@@ -121,6 +83,72 @@ public class PresenSystem : MonoBehaviour
         isSUDS = true;
         isRestart = false;
         status = 0;
+    }
+
+    internal void PresenScreen()
+    {
+        if (isSUDS)
+        {
+            SUDSScreen();
+        }
+        else if (isRestart)
+        {
+            RestartTime();
+            ShowTheme();
+            ShowLimitTime();
+            pointer.SetActive(false);
+        }
+        else
+        {
+            ChangeTheme();
+            ShowLimitTime();
+        }
+        LimitTimer();
+    }
+
+    internal void EndScreen()
+    {
+        if (Input.GetKeyDown("space"))
+        {
+            status = 0;
+            Init();
+        }
+        pointer.SetActive(true);
+    }
+
+    internal void SUDSScreen()
+    {
+        if (Input.GetKeyDown("space"))
+        {
+            SUDS suds = NumKeypad.GetComponent<SUDS>();
+            SUDSScores.Add(suds.SUDSScore);
+            EndSUDS();
+            return;
+        }
+        ShowSUDS();
+        pointer.SetActive(true);
+        NumKeypad.SetActive(true);
+    }
+
+    internal void EndSUDS()
+    {
+        isSUDS = false;
+        isRestart = true;
+        pointer.SetActive(false);
+        NumKeypad.SetActive(false);
+    }
+
+    public void Click()
+    {
+        if (status == 0)
+        {
+            status = 1;
+        }
+        else if(status == 2)
+        {
+            status = 0;
+            Init();
+        }
     }
 
     /// <summary>
@@ -150,7 +178,8 @@ public class PresenSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// プレゼンテーマの表示
+    /// プレゼンテーマの切り替え
+    /// 
     /// </summary>
     internal void ChangeTheme()
     {
@@ -167,6 +196,10 @@ public class PresenSystem : MonoBehaviour
         
         ShowTheme();
     }
+
+    /// <summary>
+    /// プレゼンテーマの表示
+    /// </summary>
     internal void ShowTheme()
     {
         if (second > 0)
@@ -180,12 +213,19 @@ public class PresenSystem : MonoBehaviour
             if (count == nowThemeCount)
             {
                 int _num = count + 1;
+                presenMonitor.fontSize = 36;
                 presenMonitor.SetText(_num + "\r\n" + themeList[count]);
             }
             else if (nowThemeCount >= themeNum) //現在のテーマ数が全テーマ数を超えたとき
             {
                 status = 2;
-                presenMonitor.SetText("お疲れ様でした。\r\n ヘッドセットを外して実験者に声をかけてください"); //プレゼンを終了
+                string _SUDSRec = null;
+                for (int i = 0; i < SUDSScores.Count; i++)
+                {
+                    _SUDSRec = String.Concat(_SUDSRec,SUDSScores[i] + "点 ");
+                }
+                presenMonitor.fontSize = 26;
+                presenMonitor.SetText("お疲れ様でした。\r\n ヘッドセットを外して実験者に声をかけてください。\r\n" + _SUDSRec); //プレゼンを終了
                 second = 0;
             }
         }
@@ -198,7 +238,14 @@ public class PresenSystem : MonoBehaviour
     /// </summary>
     internal void ShowSUDS()
     {
-        presenMonitor.SetText("今の不安について1～100で答えてください");
+        string _SUDSRec = null;
+        for(int i = 0; i <SUDSScores.Count; i++)
+        {
+            int _num = i + 1;
+            _SUDSRec = String.Concat(_SUDSRec, _num + "回目:" + SUDSScores[i] + "点 ");
+        }
+        presenMonitor.fontSize = 26;
+        presenMonitor.SetText("今の不安について1～100で答えてください\r\n" + _SUDSRec);
     }
 
 }
