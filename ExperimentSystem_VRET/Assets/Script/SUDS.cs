@@ -61,6 +61,7 @@ public class SUDS : MonoBehaviour
     {
         presenSystem.SUDSScores.Add(SUDSScore);
         presenSystem.EndSUDS();
+        NumKeypad.SetText("0");
     }
 
 

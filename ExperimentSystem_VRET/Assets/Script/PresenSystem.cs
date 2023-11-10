@@ -42,7 +42,7 @@ public class PresenSystem : MonoBehaviour
     void Start()
     {
         NumKeypad = GameObject.Find("NumKeypad");
-        SUDSScores = new List<int>();
+        
         Init();
     }
 
@@ -79,6 +79,7 @@ public class PresenSystem : MonoBehaviour
         nowThemeCount = 0;
         limitTime = 0;
         themeList = new List<string>() { theme1, theme2, theme3, theme4, theme5, theme6, theme7, theme8, theme9 };
+        SUDSScores = new List<int>();
         presenMonitor.SetText(theme1);
         isSUDS = true;
         isRestart = false;
