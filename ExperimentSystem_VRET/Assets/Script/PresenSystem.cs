@@ -38,7 +38,6 @@ public class PresenSystem : MonoBehaviour
     public GameObject pointer;
     internal GameObject NumKeypad;
 
-
     void Start()
     {
         NumKeypad = GameObject.Find("NumKeypad");
@@ -65,7 +64,7 @@ public class PresenSystem : MonoBehaviour
 
     internal void TitleScreen()
     {
-        presenMonitor.SetText("Spaceでスタート");
+        presenMonitor.SetText("画面をクリックをしてスタート");
         NumKeypad.SetActive(false);
         if (Input.GetKeyDown("space"))
         {
@@ -246,7 +245,6 @@ public class PresenSystem : MonoBehaviour
             _SUDSRec = String.Concat(_SUDSRec, _num + "回目:" + SUDSScores[i] + "点 ");
         }
         presenMonitor.fontSize = 26;
-        presenMonitor.SetText("今の不安について1～100で答えてください\r\n" + _SUDSRec);
+        presenMonitor.SetText("今の不安について0～100で答えてください\r\n" + _SUDSRec);
     }
-
 }
