@@ -19,17 +19,7 @@ public class PresenSystem : MonoBehaviour
     internal bool isRestart;
     internal bool isPresentating;
 
-    public string theme1;
-    public string theme2;
-    public string theme3;
-    public string theme4;
-    public string theme5;
-    public string theme6;
-    public string theme7;
-    public string theme8;
-    public string theme9;
-
-    private List<string> themeList; //プレゼンテーマリスト
+    public List<string> themeList; //プレゼンテーマリスト
     internal List<int> SUDSScores;
 
     internal int status;
@@ -77,9 +67,7 @@ public class PresenSystem : MonoBehaviour
         second = -1;
         nowThemeCount = 0;
         limitTime = 0;
-        themeList = new List<string>() { theme1, theme2, theme3, theme4, theme5, theme6, theme7, theme8, theme9 };
         SUDSScores = new List<int>();
-        presenMonitor.SetText(theme1);
         isSUDS = true;
         isRestart = false;
         status = 0;
