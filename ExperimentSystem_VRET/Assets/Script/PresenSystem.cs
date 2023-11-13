@@ -11,6 +11,7 @@ public class PresenSystem : MonoBehaviour
     // Start is called before the first frame update
     public TextMeshProUGUI presenMonitor;
     public TextMeshProUGUI timer;
+    public TextMeshProUGUI AttMonitor;
     public int themeNum; //合計のプレゼン数
     private int nowThemeCount;//現在のプレゼン数
     private int limitTime; //制限時間　
@@ -20,7 +21,8 @@ public class PresenSystem : MonoBehaviour
     internal bool isPresentating;
 
     public List<string> themeList;  //プレゼンテーマリスト
-    public List<AudioClip> audioClips;//ATTの音声リスト
+    public List<string> attTextList;//ATTのテキスト・音声リスト
+    public List<AudioClip> attAudioList;
     public int attTimeSpan;         //ATTターゲットの表示時間
     public int attHidTimeSpan;    //ATTターゲットの非表示時間
     private int nextShowAttTime;    //次にターゲットが現れる時間
@@ -32,8 +34,6 @@ public class PresenSystem : MonoBehaviour
     internal bool playAttAudio;
     internal bool showAttTarget;
 
-    public List<string> attText;
-
     internal List<int> SUDSScores;
 
     internal int status;
@@ -41,6 +41,7 @@ public class PresenSystem : MonoBehaviour
     internal int second; //カウントダウンの時間（秒）
     public GameObject pointer;
     internal GameObject NumKeypad;
+    public GameObject AttMonitorObj;
 
     void Start()
     {
@@ -86,7 +87,7 @@ public class PresenSystem : MonoBehaviour
         isRestart = false;
         status = 0;
         audioSource = GetComponent<AudioSource>();
-        attNum = audioClips.Count;
+        attNum = attAudioList.Count;
         nowAttCount = 0;
         playAttAudio = false;
         nextShowAttTime = attHidTimeSpan;
@@ -139,6 +140,7 @@ public class PresenSystem : MonoBehaviour
         ShowSUDS();
         pointer.SetActive(true);
         NumKeypad.SetActive(true);
+        AttMonitorObj.SetActive(false);
     }
 
     internal void EndSUDS()
@@ -147,6 +149,7 @@ public class PresenSystem : MonoBehaviour
         isRestart = true;
         pointer.SetActive(false);
         NumKeypad.SetActive(false);
+        AttMonitorObj.SetActive(true);
     }
 
     public void Click()
@@ -268,9 +271,7 @@ public class PresenSystem : MonoBehaviour
     {
         if (playAttAudio)
         {
-            audioSource.PlayOneShot(audioClips[nowAttCount]);
-            playAttAudio = false;
-            if(nowAttCount == audioClips.Count - 1)
+            if (nowAttCount == attAudioList.Count - 1)
             {
                 nowAttCount = 0;
             }
@@ -278,6 +279,16 @@ public class PresenSystem : MonoBehaviour
             {
                 nowAttCount++;
             }
+            audioSource.PlayOneShot(attAudioList[nowAttCount]);
+            playAttAudio = false;
+        }
+        if (showAttTarget)
+        {
+            AttMonitor.SetText(attTextList[nowAttCount]);
+        }
+        else
+        {
+            AttMonitor.SetText(" ");
         }
     }
 
