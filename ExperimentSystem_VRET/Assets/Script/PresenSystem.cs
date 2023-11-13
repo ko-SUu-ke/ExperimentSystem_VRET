@@ -19,7 +19,21 @@ public class PresenSystem : MonoBehaviour
     internal bool isRestart;
     internal bool isPresentating;
 
-    public List<string> themeList; //プレゼンテーマリスト
+    public List<string> themeList;  //プレゼンテーマリスト
+    public List<AudioClip> audioClips;//ATTの音声リスト
+    public int attTimeSpan;         //ATTターゲットの表示時間
+    public int attHidTimeSpan;    //ATTターゲットの非表示時間
+    private int nextShowAttTime;    //次にターゲットが現れる時間
+    private int nextHidAttTime;     //次にターゲットが隠れる時間
+
+    internal AudioSource audioSource;
+    private int attNum;
+    internal int nowAttCount;
+    internal bool playAttAudio;
+    internal bool showAttTarget;
+
+    public List<string> attText;
+
     internal List<int> SUDSScores;
 
     internal int status;
@@ -71,6 +85,12 @@ public class PresenSystem : MonoBehaviour
         isSUDS = true;
         isRestart = false;
         status = 0;
+        audioSource = GetComponent<AudioSource>();
+        attNum = audioClips.Count;
+        nowAttCount = 0;
+        playAttAudio = false;
+        nextShowAttTime = attHidTimeSpan;
+        nextHidAttTime = 0;
     }
 
     internal void PresenScreen()
@@ -84,13 +104,16 @@ public class PresenSystem : MonoBehaviour
             RestartTime();
             ShowTheme();
             ShowLimitTime();
+            Att();
             pointer.SetActive(false);
         }
         else
         {
             ChangeTheme();
             ShowLimitTime();
+            Att();
         }
+        AttTime();
         LimitTimer();
     }
 
@@ -195,6 +218,8 @@ public class PresenSystem : MonoBehaviour
             return;
         }
         limitTime += timeSpan; //制限時間をセット
+        nextShowAttTime = attHidTimeSpan;
+        nextHidAttTime = 0;
 
         for (int count = 0; count < themeList.Count; count++)
         {
@@ -235,4 +260,42 @@ public class PresenSystem : MonoBehaviour
         presenMonitor.fontSize = 26;
         presenMonitor.SetText("今の不安について0～100で答えてください\r\n" + _SUDSRec);
     }
+
+    /// <summary>
+    /// ATTのターゲット示す
+    /// </summary>
+    internal void Att()
+    {
+        if (playAttAudio)
+        {
+            audioSource.PlayOneShot(audioClips[nowAttCount]);
+            playAttAudio = false;
+            if(nowAttCount == audioClips.Count - 1)
+            {
+                nowAttCount = 0;
+            }
+            else
+            {
+                nowAttCount++;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Attの時間管理
+    /// </summary>
+    internal void AttTime()
+    {
+        if (second == timeSpan - nextHidAttTime)
+        {
+            playAttAudio = false;
+            showAttTarget = false;
+            nextHidAttTime += attTimeSpan + attHidTimeSpan;
+        }else if(second == timeSpan - nextShowAttTime){
+            playAttAudio = true;
+            showAttTarget = true;
+            nextShowAttTime += attTimeSpan + attHidTimeSpan;
+        }
+    }
+
 }
