@@ -61,6 +61,7 @@ public class SUDS : MonoBehaviour
     {
         presenSystem.SUDSScores.Add(SUDSScore);
         numList = new List<int>();
+        SUDSScore = 0;
         presenSystem.EndSUDS();
     }
 }
