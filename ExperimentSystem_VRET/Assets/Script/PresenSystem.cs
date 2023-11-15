@@ -40,12 +40,13 @@ public class PresenSystem : MonoBehaviour
 
     internal int second; //カウントダウンの時間（秒）
     public GameObject pointer;
-    internal GameObject NumKeypad;
-    public GameObject AttMonitorObj;
+    internal GameObject numKeypad;
+    public GameObject attMonitorObj;
+    public List<GameObject> attTargets;
 
     void Start()
     {
-        NumKeypad = GameObject.Find("NumKeypad");
+        numKeypad = GameObject.Find("NumKeypad");
         
         Init();
     }
@@ -70,7 +71,7 @@ public class PresenSystem : MonoBehaviour
     internal void TitleScreen()
     {
         presenMonitor.SetText("画面をクリックをしてスタート");
-        NumKeypad.SetActive(false);
+        numKeypad.SetActive(false);
         if (Input.GetKeyDown("space"))
         {
             status = 1;
@@ -92,6 +93,12 @@ public class PresenSystem : MonoBehaviour
         playAttAudio = false;
         nextShowAttTime = attHidTimeSpan;
         nextHidAttTime = 0;
+        
+        foreach(GameObject attTarget in attTargets)
+        {
+            attTarget.SetActive(false);
+        }
+        attMonitorObj.SetActive(false);
     }
 
     internal void PresenScreen()
@@ -132,15 +139,15 @@ public class PresenSystem : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-            SUDS suds = NumKeypad.GetComponent<SUDS>();
+            SUDS suds = numKeypad.GetComponent<SUDS>();
             SUDSScores.Add(suds.SUDSScore);
             EndSUDS();
             return;
         }
         ShowSUDS();
         pointer.SetActive(true);
-        NumKeypad.SetActive(true);
-        AttMonitorObj.SetActive(false);
+        numKeypad.SetActive(true);
+        attMonitorObj.SetActive(false);
     }
 
     internal void EndSUDS()
@@ -148,8 +155,8 @@ public class PresenSystem : MonoBehaviour
         isSUDS = false;
         isRestart = true;
         pointer.SetActive(false);
-        NumKeypad.SetActive(false);
-        AttMonitorObj.SetActive(true);
+        numKeypad.SetActive(false);
+        //AttMonitorObj.SetActive(true);
     }
 
     public void Click()
@@ -271,7 +278,7 @@ public class PresenSystem : MonoBehaviour
     {
         if (playAttAudio)
         {
-            if (nowAttCount == attAudioList.Count - 1)
+            if (nowAttCount == attTargets.Count - 1)
             {
                 nowAttCount = 0;
             }
@@ -279,16 +286,18 @@ public class PresenSystem : MonoBehaviour
             {
                 nowAttCount++;
             }
-            audioSource.PlayOneShot(attAudioList[nowAttCount]);
+            //audioSource.PlayOneShot(attAudioList[nowAttCount]);
             playAttAudio = false;
         }
         if (showAttTarget)
         {
-            AttMonitor.SetText(attTextList[nowAttCount]);
+            //AttMonitor.SetText(attTextList[nowAttCount]);
+            attTargets[nowAttCount].SetActive(true);
         }
         else
         {
-            AttMonitor.SetText(" ");
+            //AttMonitor.SetText(" ");
+            attTargets[nowAttCount].SetActive(false);
         }
     }
 
@@ -308,5 +317,4 @@ public class PresenSystem : MonoBehaviour
             nextShowAttTime += attTimeSpan + attHidTimeSpan;
         }
     }
-
 }
