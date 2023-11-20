@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.1802834, g: 0.22571361, b: 0.30692232, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4282,8 +4282,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 00:00
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1aac2a06cdaf60c4cb42193fef88d708, type: 2}
-  m_sharedMaterial: {fileID: -491268479055941634, guid: 1aac2a06cdaf60c4cb42193fef88d708, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10151,6 +10151,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: F02
       objectReference: {fileID: 0}
+    - target: {fileID: 5351135490865905770, guid: 03c02b29eb3ff0c49b655c27171ab954, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5858219733466903288, guid: 03c02b29eb3ff0c49b655c27171ab954, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -15660,15 +15664,16 @@ MonoBehaviour:
   timer: {fileID: 326771927}
   themeNum: 9
   timeSpan: 2
-  theme1: "\u900F\u660E\u4EBA\u9593\u306B\u306A\u308A\u305F\u3044\u304B\uFF0C\u306A\u308A\u306A\u304F\u306A\u3044\u304B\u3002"
-  theme2: "\u4E00\u7DD2\u306B\u4F4F\u3080\u306A\u3089\u72AC\u3068\u732B\u306E\u3069\u3061\u3089\u304C\u826F\u3044\u304B"
-  theme3: "\u30DA\u30C3\u30C8\u306E\u8CA9\u58F2\u3092\u7981\u6B62\u3059\u3079\u304D\u304B\u3069\u3046\u304B\u3002"
-  theme4: "\u304A\u5E97\u3067\u30C8\u30A4\u30EC\u3060\u3051\u501F\u308A\u308B\u306E\u306F\u3042\u308A\u304B"
-  theme5: "\u5B50\u3069\u3082\u306B\u30B9\u30DE\u30FC\u30C8\u30D5\u30A9\u30F3\u306F\u5FC5\u8981\u304B"
-  theme6: "\u52C9\u5F37\u3068\u90E8\u6D3B\uFF0C\u3069\u3061\u3089\u304C\u5927\u5207\u304B\u3002"
-  theme7: "\u30BF\u30A4\u30E0\u30DE\u30B7\u30F3\u306F\u5B58\u5728\u3059\u308B\u306E\u304B"
-  theme8: "\u30DE\u30CA\u30FC\u306F\u672C\u5F53\u306B\u5FC5\u8981\u306A\u306E\u304B"
-  theme9: "\u5B89\u697D\u6B7B\u3092\u5C0E\u5165\u3059\u3079\u304D\u304B\uFF1F"
+  themeList:
+  - "\u98DB\u3073\u7D1A\u5236\u5EA6\u3092\u5C0E\u5165\u3059\u3079\u304D\u304B"
+  - "\u4F4F\u3080\u306A\u3089\u90FD\u4F1A\u304B\u5730\u65B9\u304B"
+  - "\u30DE\u30CA\u30FC\u306F\u672C\u5F53\u306B\u5FC5\u8981\u306A\u306E\u304B"
+  - "\u671D\u3054\u306F\u3093\u306F\u98DF\u3079\u305F\u307B\u3046\u304C\u3044\u3044\u306E\u304B"
+  - "\u5B87\u5B99\u65C5\u884C\u306B\u884C\u304D\u305F\u3044\u304B\u3069\u3046\u304B"
+  - "\u7D50\u5A5A\u3059\u308B\u3053\u3068\u306F\u5E78\u305B\u306A\u306E\u304B"
+  - "\u30EA\u30E2\u30FC\u30C8\u3068\u51FA\u793E\u3069\u3061\u3089\u304C\u3057\u305F\u3044\u304B"
+  - "\u5B66\u751F\u306B\u304A\u5C0F\u9063\u3044\u306F\u5FC5\u8981\u304B\u3001\u4E0D\u8981\u304B"
+  - "\u30A6\u30BD\u3092\u3064\u304F\u3053\u3068\u306F\u826F\u3044\u306E\u304B\u60AA\u3044\u306E\u304B"
   pointer: {fileID: 1166309858}
 --- !u!114 &1443483682
 MonoBehaviour:
@@ -19044,21 +19049,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4de62f62a299d74ebf36b2aada45ce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sound1: {fileID: 0}
-  sound2: {fileID: 0}
-  sound3: {fileID: 0}
-  sound4: {fileID: 0}
-  sound5: {fileID: 0}
-  sound6: {fileID: 0}
-  sound7: {fileID: 0}
-  sound8: {fileID: 0}
-  sound9: {fileID: 0}
-  sound10: {fileID: 0}
-  sound11: {fileID: 0}
-  sound12: {fileID: 0}
-  sound13: {fileID: 0}
-  soundList:
-  - {fileID: 0}
 --- !u!1 &1834504023
 GameObject:
   m_ObjectHideFlags: 0
