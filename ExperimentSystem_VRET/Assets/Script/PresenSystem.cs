@@ -230,7 +230,7 @@ public class PresenSystem : MonoBehaviour
             {
                 int _num = count + 1;
                 presenMonitor.fontSize = 36;
-                presenMonitor.SetText(_num + "\r\n" + themeList[count]);
+                presenMonitor.SetText(themeList[count]);
             }
             else if (nowThemeCount >= themeNum) //現在のテーマ数が全テーマ数を超えたとき
             {
