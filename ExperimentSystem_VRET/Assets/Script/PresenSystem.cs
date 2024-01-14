@@ -41,7 +41,7 @@ public class PresenSystem : MonoBehaviour
     internal int second; //カウントダウンの時間（秒）
     public GameObject pointer;
     internal GameObject NumKeypad;
-    public GameObject AttMonitorObj;
+    //public GameObject AttMonitorObj;
 
     void Start()
     {
@@ -140,7 +140,7 @@ public class PresenSystem : MonoBehaviour
         ShowSUDS();
         pointer.SetActive(true);
         NumKeypad.SetActive(true);
-        AttMonitorObj.SetActive(false);
+        //AttMonitorObj.SetActive(false);
     }
 
     internal void EndSUDS()
@@ -149,7 +149,7 @@ public class PresenSystem : MonoBehaviour
         isRestart = true;
         pointer.SetActive(false);
         NumKeypad.SetActive(false);
-        AttMonitorObj.SetActive(true);
+        //AttMonitorObj.SetActive(true);
     }
 
     public void Click()

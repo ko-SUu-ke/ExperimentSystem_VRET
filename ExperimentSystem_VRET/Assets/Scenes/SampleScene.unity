@@ -18008,7 +18008,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &1332035957
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -18958,8 +18958,13 @@ MonoBehaviour:
   - "\u672C\u306F\u7D19\u3068\u96FB\u5B50\u3069\u3061\u3089\u304C\u826F\u3044\u304B"
   - "\u5B66\u751F\u306B\u304A\u5C0F\u9063\u3044\u306F\u5FC5\u8981\u304B\uFF0C\u4E0D\u8981\u304B"
   - "\u30A6\u30BD\u3092\u3064\u304F\u3053\u3068\u306F\u826F\u3044\u306E\u304B\u60AA\u3044\u306E\u304B"
+  attTextList:
+  - "\u30AA\u30FC\u30C7\u30A3\u30A8\u30F3\u30B9\u3092\u610F\u8B58\u3057\u307E\u3057\u3087\u3046"
+  attAudioList:
+  - {fileID: 8300000, guid: af91ca1e28ab3bd43ae4d1e26d2f206e, type: 3}
+  attTimeSpan: 30
+  attHidTimeSpan: 30
   pointer: {fileID: 1166309858}
-  AttMonitorObj: {fileID: 1332035956}
 --- !u!114 &1443483682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26959,3 +26964,4 @@ SceneRoots:
   - {fileID: 301906875}
   - {fileID: 2032450398}
   - {fileID: 1332035960}
+  - {fileID: 1822212877}
